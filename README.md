@@ -71,7 +71,7 @@ wait for all services to be healthy (check with `docker-compose ps`).
 execute the initial ddl script to create tables:
 
 ```bash
-docker-compose exec clickhouse clickhouse-client < sql/create_tables.sql
+docker-compose exec -T clickhouse clickhouse-client < sql/create_tables.sql
 ```
 
 this creates:
@@ -113,7 +113,7 @@ you should see the row count increasing as data is consumed from kafka.
 execute the analytics query to find the category with largest transaction per state:
 
 ```bash
-docker-compose exec clickhouse clickhouse-client < sql/analytics_query.sql
+docker-compose exec -T clickhouse clickhouse-client < sql/analytics_query.sql
 ```
 
 to export results to csv:
@@ -127,12 +127,12 @@ docker-compose exec clickhouse clickhouse-client --query "SELECT us_state, cat_i
 apply the optimized ddl for better query performance:
 
 ```bash
-docker-compose exec clickhouse clickhouse-client < sql/create_tables_optimized.sql
+docker-compose exec -T clickhouse clickhouse-client < sql/create_tables_optimized.sql
 ```
 
 the optimizations include:
 - partitioning by year month
-- enhanced order by clause (us_state, cat_id, amount desc)
+- enhanced order by clause (us_state, cat_id, amount)
 - skip indexes on us_state and cat_id columns
 - materialized columns for date based operations
 

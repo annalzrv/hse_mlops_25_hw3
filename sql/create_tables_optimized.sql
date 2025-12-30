@@ -61,7 +61,7 @@ CREATE TABLE transactions (
     INDEX idx_cat_id cat_id TYPE bloom_filter GRANULARITY 1
 ) ENGINE = MergeTree()
 PARTITION BY transaction_year_month
-ORDER BY (us_state, cat_id, amount DESC)
+ORDER BY (us_state, cat_id, amount)
 SETTINGS index_granularity = 8192;
 
 -- materialized view: transfers data from kafka table to optimized mergetree table
